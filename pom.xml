@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
+    <modelVersion>4.0.0</modelVersion>  
+    <groupId>com.codefans</groupId>  
+    <artifactId>http-project</artifactId>  
+    <version>1.0.0-SNAPSHOT</version>  
+    <packaging>pom</packaging>  
+    <name>http-project</name>
+
+    <modules> 
+        <module>http-common</module>  
+        <module>http-server</module>  
+        <module>http-client</module> 
+    </modules>  
+    <properties> 
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>2.1.11.RELEASE</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build> 
+        <finalName>${project.artifactId}</finalName>  
+        <plugins> 
+            <plugin> 
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-compiler-plugin</artifactId>  
+                <version>3.7.0</version>  
+                <configuration>
+                    <source>1.7</source>  
+                    <encoding>UTF8</encoding>  
+                    <target>1.7</target> 
+                </configuration> 
+            </plugin>  
+            <plugin> 
+                <artifactId>maven-source-plugin</artifactId>  
+                <version>2.4</version>  
+                <configuration> 
+                    <attach>true</attach> 
+                </configuration>  
+                <executions> 
+                    <execution> 
+                        <phase>compile</phase>  
+                        <goals> 
+                            <goal>jar</goal> 
+                        </goals> 
+                    </execution> 
+                </executions> 
+            </plugin>
+        </plugins>  
+        <resources> 
+            <resource> 
+                <directory>src/main/resources</directory>  
+                <filtering>true</filtering> 
+            </resource> 
+        </resources> 
+    </build>  
+    <profiles> 
+        <profile> 
+            <id>dev</id>  
+            <properties> 
+                <env>dev</env> 
+            </properties> 
+        </profile>  
+        <profile> 
+            <id>std-test</id>  
+            <properties> 
+                <std-test>std-test</std-test> 
+            </properties> 
+        </profile>  
+        <profile> 
+            <id>product</id>  
+            <properties> 
+                <product>product</product> 
+            </properties> 
+        </profile> 
+    </profiles> 
+</project>
