@@ -2,18 +2,12 @@ package com.http.server.springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-@RestController
-@EnableAutoConfiguration
-public class SpringBootMainStartup {
-
-    @RequestMapping("/")
-    String home() {
-        System.out.println("welcome home!!!");
-        return "Hello World!";
-    }
+@SpringBootApplication
+//@EnableAutoConfiguration
+public class SpringBootMainStartup extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootMainStartup.class, args);
