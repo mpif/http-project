@@ -79,10 +79,14 @@ public class CommonHttpClientTest {
     @Test
     public void multiFileUploadTest() throws Exception {
 
-        String url = "http://localhost:8080/upload";
+        String url = "http://localhost:8080/multiUpload";
         String filePath = "C:\\Users\\caishengzhi\\Pictures\\电脑-wifi-测速.png";
+        String filePath2 = "C:\\Users\\caishengzhi\\Pictures\\电脑-wifi-测速2.png";
+        String filePath3 = "C:\\Users\\caishengzhi\\Pictures\\电脑-wifi-测速3.png";
         List<String> filePathList = new ArrayList<>();
         filePathList.add(filePath);
+        filePathList.add(filePath2);
+        filePathList.add(filePath3);
         String responseBody = CommonHttpClient.multiFileUpload(url, filePathList);
         System.out.println("url=" + url);
         System.out.println("responseBody=" + responseBody);
