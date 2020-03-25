@@ -1,11 +1,11 @@
 package com.http.server.springboot;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-
-@EnableAutoConfiguration
-public class SpringBootMainStartup {
+@SpringBootApplication
+public class SpringBootMainStartup extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootMainStartup.class, args);
