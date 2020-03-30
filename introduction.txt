@@ -1,0 +1,10 @@
+1、启动http服务端
+    com.http.server.springboot.SpringBootMainStartup.main()
+
+2、运行http客户端
+    HttpClient实现：
+        CommonHttpClientTest.java
+    Socket实现：
+        HttpClientSimulatorTest.java
+    HttpUrlConnection实现：
+        HttpUrlConnectionClientTest.java

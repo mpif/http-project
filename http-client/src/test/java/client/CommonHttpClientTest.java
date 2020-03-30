@@ -9,11 +9,14 @@ package client;
 
 
 import com.http.client.CommonHttpClient;
+import com.http.util.CollectionUtil;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -25,6 +28,8 @@ import java.util.List;
  */
 public class CommonHttpClientTest {
 
+    private String urlPrefix = "http://localhost:8088";
+
     /**
      * getTest
      *
@@ -33,10 +38,11 @@ public class CommonHttpClientTest {
     @Test
     public void getTest() throws IOException {
 
-        String url = "";
+        String url = urlPrefix + "/upload";
         String responseBody = CommonHttpClient.get(url);
         System.out.println("url=" + url);
-        System.out.println("responseBody=" + responseBody);
+        System.out.println("responseBody=");
+        System.out.println(responseBody);
 
     }
 
@@ -48,10 +54,14 @@ public class CommonHttpClientTest {
     @Test
     public void postTest() throws IOException {
 
-        String url = "";
-        String responseBody = CommonHttpClient.get(url);
+        String url = urlPrefix + "/login";
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("name", "zhangsan");
+        paramMap.put("pass", "123");
+        String responseBody = CommonHttpClient.post(url, paramMap);
         System.out.println("url=" + url);
-        System.out.println("responseBody=" + responseBody);
+        System.out.println("responseBody=");
+        System.out.println(responseBody);
 
     }
 
@@ -63,11 +73,12 @@ public class CommonHttpClientTest {
     @Test
     public void singleFileUploadTest() throws Exception {
 
-        String url = "http://localhost:8080/upload";
+        String url = urlPrefix + "/upload";
         String filePath = "C:\\Users\\caishengzhi\\Pictures\\电脑-wifi-测速.png";
         String responseBody = CommonHttpClient.singleFileUpload(url, filePath);
         System.out.println("url=" + url);
-        System.out.println("responseBody=" + responseBody);
+        System.out.println("responseBody=");
+        System.out.println(responseBody);
 
     }
 
@@ -79,7 +90,12 @@ public class CommonHttpClientTest {
     @Test
     public void multiFileUploadTest() throws Exception {
 
-        String url = "http://localhost:8080/multiUpload";
+        String url = urlPrefix + "/multiUpload";
+
+        Map<String, String> paramMap = CollectionUtil.createMap();
+        paramMap.put("fileType", "赵六");
+        paramMap.put("fileCount", "4789");
+
         String filePath = "C:\\Users\\caishengzhi\\Pictures\\电脑-wifi-测速.png";
         String filePath2 = "C:\\Users\\caishengzhi\\Pictures\\电脑-wifi-测速2.png";
         String filePath3 = "C:\\Users\\caishengzhi\\Pictures\\电脑-wifi-测速3.png";
@@ -87,9 +103,10 @@ public class CommonHttpClientTest {
         filePathList.add(filePath);
         filePathList.add(filePath2);
         filePathList.add(filePath3);
-        String responseBody = CommonHttpClient.multiFileUpload(url, filePathList);
+        String responseBody = CommonHttpClient.multiFileUpload(url, paramMap, filePathList);
         System.out.println("url=" + url);
-        System.out.println("responseBody=" + responseBody);
+        System.out.println("responseBody=");
+        System.out.println(responseBody);
 
     }
 

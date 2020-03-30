@@ -8,6 +8,8 @@
 package com.http.client;
 
 
+import com.http.HttpBase;
+import com.http.util.CollectionUtil;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -45,7 +47,7 @@ import java.util.Map;
  * @Date: 2020/03/24 21:58
  * @since: 1.0.0
  */
-public class CommonHttpClient {
+public class CommonHttpClient extends HttpBase {
 
     /**
      * 发送get请求
@@ -78,7 +80,6 @@ public class CommonHttpClient {
             };
             responseBody = httpclient.execute(httpget, responseHandler);
             System.out.println("----------------------------------------");
-            System.out.println(responseBody);
         } finally {
             httpclient.close();
         }
@@ -128,7 +129,6 @@ public class CommonHttpClient {
             };
             responseBody = httpclient.execute(httpPost, responseHandler);
             System.out.println("----------------------------------------");
-            System.out.println(responseBody);
         } finally {
             httpclient.close();
         }
@@ -174,17 +174,15 @@ public class CommonHttpClient {
         return result;
     }
 
-    public static String multiFileUpload(String url, List<String> filePathList) throws Exception {
-        if (filePathList == null || filePathList.size() == 0)  {
-            System.out.println("File path not given");
-            System.exit(1);
-        }
+    public static String multiFileUpload(String url, Map<String, String> paramMap, List<String> filePathList) throws Exception {
+//        if (filePathList == null || filePathList.size() == 0)  {
+//            System.out.println("File path not given");
+//            System.exit(1);
+//        }
         CloseableHttpClient httpclient = HttpClients.createDefault();
         String result = "";
         try {
             HttpPost httppost = new HttpPost(url);
-
-            StringBody comment = new StringBody("A binary file of some kind", ContentType.TEXT_PLAIN);
 
             MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
             //解决乱码方法:1：设置模式为BROWSER_COMPATIBLE，并设置字符集为UTF8
@@ -204,7 +202,14 @@ public class CommonHttpClient {
             for(String filePath : filePathList) {
                 multipartEntityBuilder.addPart("file", new FileBody(new File(filePath)));
             }
-            multipartEntityBuilder.addPart("comment", comment);
+            if(CollectionUtil.isNotEmpty(paramMap)) {
+                Iterator<String> iter = paramMap.keySet().iterator();
+                String key = "";
+                while(iter.hasNext()) {
+                    key = iter.next();
+                    multipartEntityBuilder.addPart(key, new StringBody(paramMap.get(key), ContentType.create("text/plain", "UTF-8")));
+                }
+            }
             HttpEntity reqEntity = multipartEntityBuilder.build();
             httppost.setEntity(reqEntity);
 
